@@ -1,7 +1,7 @@
 <template>
   <div
-    v-if="bannerList"
     class="banner-list"
+    v-if="bannerList"
     ref="banner"
   >
     <div
@@ -9,18 +9,18 @@
       :style="{ backgroundImage: backgroundImg }"
     ></div>
     <ul
-      class="flex-start banner-list__container"
-      :style="{ width: bannerWidth, transform: translateXValue }"
+      @mouseenter="isShow = true"
+      @mouseleave="isShow = false"
     >
       <li
+        class="banner-list__prev"
+        v-show="isShow"
+        @click="handlePrev"
+      ></li>
+      <li
+        class="flex-between banner-list__item"
         v-for="(bannerItem, index) in bannerList"
-        :class="[
-          'flex-between',
-          'banner-list__item',
-          {
-            'banner-list__item--active': activeIndex === index
-          }
-        ]"
+        v-show="activeIndex === index"
         :style="{ background: geneBackgroundColor(bannerItem.color) }"
         :key="bannerItem.id"
       >
@@ -29,12 +29,30 @@
           <h4 class="banner-aside__title">{{ bannerItem.text }}</h4>
         </div>
       </li>
+      <li
+        class="banner-list__next"
+        v-show="isShow"
+        @click="handleNext"
+      ></li>
     </ul>
-    <photo-atra
+    <!-- <photo-atra
       class="banner-list__atra"
       :imgs="bannerList"
       :index="activeIndex"
-    ></photo-atra>
+    ></photo-atra> -->
+    <div class="banner-tips">
+      <span
+        v-for="index in bannerList.length"
+        :class="[
+          'banner-tips__item',
+          {
+            'banner-tips__item--active': activeIndex === index - 1
+          }
+        ]"
+        :key="index"
+        @mouseenter="handleJump(index - 1)"
+      ></span>
+    </div>
   </div>
 </template>
 
@@ -49,22 +67,17 @@ export default {
   data () {
     return {
       activeIndex: 0,
-      timer: null
+      timer: null,
+      isShow: false
     }
   },
   computed: {
     bannerList () {
       return this.$frontmatter.banners
     },
-    bannerWidth () {
-      return `${this.bannerList.length * 100}vw`;
-    },
     backgroundImg () {
       return `url(${this.$withBase(this.bannerList[this.activeIndex].img)})`;
     },
-    translateXValue () {
-      return `translateX(-${this.activeIndex * 100}vw)`;
-    }
   },
   created () {
     this.initSwiper();
@@ -89,6 +102,22 @@ export default {
           this.activeIndex++;
         }
       }, 5000);
+    },
+    handleJump (index) {
+      this.activeIndex = index;
+      this.initSwiper();
+    },
+    handlePrev () {
+      const index = this.activeIndex - 1;
+
+      this.activeIndex = index > -1 ? index : this.bannerList.length - 1;
+      this.initSwiper();
+    },
+    handleNext () {
+      const index = this.activeIndex + 1;
+
+      this.activeIndex = index > this.bannerList.length - 1 ? 0 : index;
+      this.initSwiper();
     }
   }
 }
@@ -98,46 +127,98 @@ export default {
 $desc-color = rgba(255, 255, 255, 0.75)
 $banner-height = 300px
 .banner-list
-  overflow: hidden
-  position: relative
-  width: 100vw
+  &
+    position: relative
+    overflow: hidden
+    height: $banner-height
   &__bg
     position: absolute
     z-index: -1
-    width: 100vw
+    width: 100%
     height: $banner-height
-    background-position: center
-    background-size: cover
-    opacity: 0.28
     filter: blur(16px)
-  &__container
-    height: $banner-height
-  &__item
-    box-sizing: border-box
-    padding: 0 2%
-    width: 100vw
-    height: 100%
-    font-size: 16px
-    .banner-aside
-      &
-        width: 50%
-      &__desc
-        font-size: 14px
-        color: $desc-color
-        &::after
-          content: ''
-          display: block
-          margin-top: 10px
-          width: 30px
-          height: 1px
-          background-color: $desc-color
-      &__title
-        margin: 30px 0
-        font-size: 24px
-        color: #fff
-  &__atra
+    opacity: 0.28
+  &__prev, &__next
     position: absolute
-    top: 0
-    right: 100px
-    height $banner-height
+    top: 50%
+    margin-top: -10px
+    width: 20px
+    height: 20px
+    cursor: pointer
+    &::after
+      content: ''
+      display: block
+      border-width: 2px 2px 0 0
+      border-color: #fff
+      border-style: solid
+      width: 20px
+      height: 20px
+  &__prev
+    left: 30px
+    &::after
+      transform: rotate(225deg)
+  &__next
+    right: 30px
+    &::after
+      transform: rotate(45deg)
+  &__item
+    padding: 0 10vw
+    width: 80vw
+    height: $banner-height
+    animation: hideIndex 0.3s
+    -moz-animation: hideIndex 0.3s
+    -webkit-animation: hideIndex 0.3s
+    -o-animation: hideIndex 0.3s
+@keyframes hideIndex
+  0%
+    opacity: 0
+    transform: translate(800px, 0)
+  100%
+    opacity: 1
+    transform: translate(0, 0)
+.banner-aside
+  &
+    width: 50%
+  &__desc
+    font-size: 14px
+    color: $desc-color
+    &::after
+      content: ''
+      display: block
+      margin-top: 10px
+      width: 30px
+      height: 1px
+      background-color: $desc-color
+  &__title
+    margin: 30px 0
+    font-size: 24px
+    line-height: 1.25
+    color: #fff
+&__atra
+  position: absolute
+  top: 0
+  right: 0
+  z-index: 9
+  width: 50%
+  height: $banner-height
+  background-color: #f33
+.banner-tips
+  &
+    position: absolute
+    bottom: 20px
+    left: 0
+    right: 0
+    margin: auto
+    text-align: center
+  &__item
+    display: inline-block
+    margin: 0 4px
+    padding: 5px
+    border-radius: 5px
+    width: 0
+    background-color: rgba(255, 255, 255, 0.75)
+    &--active
+      width: 20px
+      background-color: #fff
+      cursor: pointer
 </style>
