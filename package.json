@@ -1,0 +1,16 @@
+{
+  "name": "vue-ts-test",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs"
+  },
+  "dependencies": {
+    "vuepress": "^1.5.1"
+  },
+  "devDependencies": {
+    "@vuepress/plugin-search": "^1.5.1",
+    "scss-loader": "^0.0.1"
+  }
+}
