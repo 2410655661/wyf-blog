@@ -3,17 +3,16 @@
     class="banner-list"
     v-if="bannerList"
     ref="banner"
+    @mouseenter="handleMouseEnter"
+    @mouseleave="handleMouseLeave"
   >
     <div
       class="banner-list__bg"
       :style="{ backgroundImage: backgroundImg }"
     ></div>
-    <ul
-      @mouseenter="isShow = true"
-      @mouseleave="isShow = false"
-    >
+    <ul>
       <li
-        class="banner-list__prev"
+        class="text-cursor banner-list__prev"
         v-show="isShow"
         @click="handlePrev"
       ></li>
@@ -30,27 +29,27 @@
         </div>
       </li>
       <li
-        class="banner-list__next"
+        class="text-cursor banner-list__next"
         v-show="isShow"
         @click="handleNext"
       ></li>
     </ul>
-    <!-- <photo-atra
+    <photo-atra
       class="banner-list__atra"
-      :imgs="bannerList"
       :index="activeIndex"
-    ></photo-atra> -->
+    ></photo-atra>
     <div class="banner-tips">
       <span
         v-for="index in bannerList.length"
         :class="[
+          'text-cursor',
           'banner-tips__item',
           {
             'banner-tips__item--active': activeIndex === index - 1
           }
         ]"
         :key="index"
-        @mouseenter="handleJump(index - 1)"
+        @click="handleJump(index - 1)"
       ></span>
     </div>
   </div>
@@ -103,6 +102,14 @@ export default {
         }
       }, 5000);
     },
+    handleMouseEnter () {
+      this.isShow = true;
+      this.clearSwiper();
+    },
+    handleMouseLeave () {
+      this.isShow = false;
+      this.initSwiper();
+    },
     handleJump (index) {
       this.activeIndex = index;
       this.initSwiper();
@@ -141,10 +148,10 @@ $banner-height = 300px
   &__prev, &__next
     position: absolute
     top: 50%
+    z-index: 9
     margin-top: -10px
     width: 20px
     height: 20px
-    cursor: pointer
     &::after
       content: ''
       display: block
@@ -169,6 +176,13 @@ $banner-height = 300px
     -moz-animation: hideIndex 0.3s
     -webkit-animation: hideIndex 0.3s
     -o-animation: hideIndex 0.3s
+  &__atra
+    position: absolute
+    top: 0
+    right: 0
+    z-index: 5
+    width: 50%
+    height: $banner-height
 @keyframes hideIndex
   0%
     opacity: 0
@@ -194,14 +208,6 @@ $banner-height = 300px
     font-size: 24px
     line-height: 1.25
     color: #fff
-&__atra
-  position: absolute
-  top: 0
-  right: 0
-  z-index: 9
-  width: 50%
-  height: $banner-height
-  background-color: #f33
 .banner-tips
   &
     position: absolute
@@ -220,5 +226,4 @@ $banner-height = 300px
     &--active
       width: 20px
       background-color: #fff
-      cursor: pointer
 </style>

@@ -1,15 +1,13 @@
 <template>
   <div class="photo-atra">
-    <!-- <div class="photo-atra__item"> -->
     <img
       class="photo-atra__img"
-      v-for="(item, index) in imgs"
-      :style="geneTransform(index)"
-      :key="item.id"
+      v-for="(item, index) in bannerList"
       :src="$withBase(item.img)"
+      :style="geneTransformStyle(index)"
       :alt="item.text"
+      :key="item.id"
     />
-    <!-- </div> -->
   </div>
 </template>
 
@@ -17,45 +15,31 @@
 export default {
   name: 'PhotoAtra',
   props: {
-    imgs: {
-      type: Array
-    },
     index: {
       type: Number
     }
   },
   computed: {
-    translateMap () {
-      const len = this.imgs.length;
-      const index = this.index;
-      const num = (len + 1) / 2;
-      const data = {
-        [index]: 0
-      }
-
-      for (let i = 1; i < num; i++) {
-        const prev = this.generateIndex(index - i);
-        const next = this.generateIndex(index + i);
-
-        data[prev] = -i;
-        data[next] = i
-      }
-      return data;
+    bannerList () {
+      return this.$frontmatter.banners
     }
   },
   methods: {
-    generateIndex (index) {
-      return index > 5 ? this.generateIndex(index - 5) : index < 0 ? this.generateIndex(index + 5) : index;
+    receiveIndex (index, midIndex, len) {
+      index = index - this.index;
+      return index > midIndex ? index - len : index < -midIndex ? len + index : index;
     },
-    geneTransform (index) {
-      const piexIndex = this.translateMap[index];
+    geneTransformStyle (index) {
+      const len = this.bannerList.length;
+      const midIndex = Math.floor(len / 2);
+      const piexIndex = this.receiveIndex(index, midIndex, len);
       const absIndex = Math.abs(piexIndex);
-      const translateX = piexIndex === 0 ? 0 : piexIndex * 50;
-      const rotateY = piexIndex === 0 ? 0 : piexIndex * 30;
-      const scaleY = 1 - absIndex * 0.15
-      const zIndex = this.imgs.length - absIndex;
+      const translateX = piexIndex * 80;
+      const rotateY = piexIndex * 30;
+      const scaleY = 0.85 - absIndex * 0.1;
+      const zIndex = len - absIndex;
       return {
-        transform: `translateX(${translateX}px) rotateY(${rotateY}deg) scaleY(${scaleY})`,
+        transform: `translateX(${translateX}px) scaleX(${scaleY}) scaleY(${scaleY}) rotateY(${rotateY}deg)`,
         zIndex
       }
     }
@@ -65,16 +49,17 @@ export default {
 
 <style lang="stylus">
 .photo-atra
-  
   &__img
     position: absolute
-    right: 0
+    left: 50%
     top: 50%
     display: inline-block
-    margin-top: -85px
+    margin-top: -100px
+    margin-left: -120px
     border-radius: 10px
-    width: 200px
-    height: 170px
+    width: 240px
+    height: 200px
     object-fit: cover
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4)
+    transition:all 1s ease-in-out
 </style>
