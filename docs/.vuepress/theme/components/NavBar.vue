@@ -13,7 +13,7 @@
         <h1 class="nav-title__text">{{ $siteTitle }}</h1>
       </router-link>
       <div class="flex-start">
-        <SearchBox></SearchBox>
+        <!-- <SearchBox></SearchBox> -->
         <nav-link :children="$themeConfig.nav"></nav-link>
       </div>
     </nav>
@@ -22,18 +22,17 @@
 
 <script>
 import NavLink from './NavLink';
-import SearchBox from '@SearchBox';
+// import SearchBox from '@SearchBox';
 
 export default {
   components: {
     NavLink,
-    SearchBox
+    // SearchBox
   }
 }
 </script>
 
 <style lang="stylus">
-@import '../styles/variable.styl'
 $nav-height = 30px
 .nav-bar
   background-color: #fff

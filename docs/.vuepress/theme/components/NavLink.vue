@@ -49,7 +49,6 @@ export default {
 </script>
 
 <style lang="stylus">
-@import '../styles/variable.styl'
 .nav-link
   &
     position: relative

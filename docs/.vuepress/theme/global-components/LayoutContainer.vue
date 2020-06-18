@@ -28,7 +28,6 @@ export default {
 </script>
 
 <style lang="stylus">
-@import '../styles/variable.styl'
 .layout-container
   &
     width: $fill-width

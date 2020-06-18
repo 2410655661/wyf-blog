@@ -72,7 +72,7 @@ export default {
   },
   computed: {
     bannerList () {
-      return this.$frontmatter.banners
+      return this.$frontmatter.banners || [];
     },
     backgroundImg () {
       return `url(${this.$withBase(this.bannerList[this.activeIndex].img)})`;
@@ -214,6 +214,7 @@ $banner-height = 300px
     bottom: 20px
     left: 0
     right: 0
+    z-index: 8
     margin: auto
     text-align: center
   &__item

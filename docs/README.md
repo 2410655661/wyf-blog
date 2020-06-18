@@ -1,6 +1,7 @@
 ---
 home: true
 heroImage: /attack.jpg
+permalink: /
 banners: [
     {
       id: '0001',
@@ -33,5 +34,14 @@ banners: [
       color: ['30, 136, 174', '36, 207, 209']
     }
   ]
-tags: ['前端', 'css', 'javascript', '设计模式', 'vue', 'uni-app', '算法和数据结构', '面试']
+tags: 
+  - 列表
+  - 前端
+  - css
+  - javascript
+  - 设计模式
+  - vue
+  - uni-app
+  - 算法和数据结构
+  - 面试
 ---
