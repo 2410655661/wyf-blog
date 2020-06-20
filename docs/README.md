@@ -36,12 +36,4 @@ banners: [
   ]
 tags: 
   - 列表
-  - 前端
-  - css
-  - javascript
-  - 设计模式
-  - vue
-  - uni-app
-  - 算法和数据结构
-  - 面试
 ---

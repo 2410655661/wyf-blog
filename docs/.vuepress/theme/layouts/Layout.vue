@@ -23,10 +23,13 @@ export default {
 <style lang="stylus" src="../styles/interpolation.styl"></style>
 <style lang="stylus">
 .theme-container__body
+  align-items flex-start
   margin auto
   width 80%
   .article-list
+    margin-right 10px
     flex: 3
   .person-sider
+    margin-left 10px
     flex: 1
 </style>
