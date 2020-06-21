@@ -9,7 +9,7 @@
         :key="tag"
       >{{ tag }}</span>
     </p>
-    <h2 class="skill-tag__title">作者自介</h2>
+    <h2 class="skill-tag__title">自我介绍</h2>
     <ul class="text-unselect about-me">
       <li class="flex-between">
         <h3 class="about-me__name">锋晴</h3>
@@ -44,7 +44,7 @@ export default {
   },
   computed: {
     tagList () {
-      return ['HTML', 'CSS', 'Javascript', 'ECMAScript', '面向对象', '正则表达式', 'Node', '工程化', 'Webpack', 'git', '设计模式', 'VUE', 'uni-app', 'Web安全', '数据交互', '算法和数据结构', '可视化', 'ECharts', '面试'];
+      return ['HTML', 'CSS', 'JavaScript', 'ECMAScript', '面向对象', '正则表达式', 'Node', '工程化', 'Webpack', 'git', '设计模式', 'VUE', 'uni-app', 'Web安全', '数据交互', '算法和数据结构', '可视化', 'ECharts', '面试'];
     },
   }
 }
@@ -56,6 +56,8 @@ export default {
   height: 100%
   .skill-tag
     &
+      display flex
+      flex-wrap wrap
       padding: 10px
       border-radius: 6px
       background-color: #fff

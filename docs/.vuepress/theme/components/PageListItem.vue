@@ -39,7 +39,7 @@ export default {
 .page-list-item
   &
     padding: 20px
-    border-bottom: 1px solid #eee
+    border-bottom: 1px solid #ddd
   .page-list
     &__title
       font: 20px / 1 normal

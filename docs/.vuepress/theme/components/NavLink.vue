@@ -5,28 +5,18 @@
       :key="child.text"
     >
       <router-link
-        v-if="child.link"
         class="text-unselect nav-link"
+        v-if="isInnerLink(child.link)"
         :to="child.link"
         active-class="nav-link--active"
         exact
       >{{ child.text }}</router-link>
-      <div
+      <a
         v-else
-        class="text-unselect text-cursor nav-link"
-      >
-        <span>{{ child.text }}</span>
-        <ul class="nav-link__subnav">
-          <router-link
-            class="text-unselect nav-link"
-            v-for="item in child.items"
-            :to="item.link"
-            active-class="nav-link--active"
-            tag="li"
-            :key="item.link"
-          >{{ item.text }}</router-link>
-        </ul>
-      </div>
+        class="text-unselect nav-link"
+        :href="child.link"
+        target="_blank"
+      >{{ child.text }} <OutboundLink></OutboundLink></a>
     </span>
   </span>
 </template>
@@ -40,9 +30,9 @@ export default {
       required: true
     }
   },
-  data () {
-    return {
-
+  methods: {
+    isInnerLink(link) {
+      return /^(?!https?:\/\/)/i.test(link);
     }
   }
 }

@@ -7,22 +7,22 @@ module.exports = {
     ['link', { rel: 'icon', href: '/favicon.ico' }]
   ],
   themeConfig: {
-    // search: false,
-    // searchMaxSuggestions: 10,
     logo: '/blog_logo.png',
     nav: [
       { text: '主页', link: '/' },
-      { text: 'js', link: '/js/' },
-      { text: 'node', link: '/node/' },
+      { text: 'JavaScript', link: '/js/' },
+      { text: 'Node', link: '/node/' },
       { text: '算法', link: '/algorithm/' },
       { text: '面试', link: '/interview/' },
-      { text: '其它', link: '/web/' },
+      { text: '其它', link: '/other/' },
       { text: 'GitHub', link: 'https://github.com/2410655661' }
     ],
+    footer: 'Copyright © 锋晴的技术博客官网 2020 | Powered by WYF'
   },
-  // plugins: [
-  //   ['@vuepress/search', {
-  //     searchMaxSuggestions: 10
-  //   }]
-  // ]
+  markdown: {
+    anchor: {
+      permalink: false, permalinkBefore: false, permalinkSymbol: '#'
+    }
+  },
+  plugins: ['@vuepress/back-to-top']
 }

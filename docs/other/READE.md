@@ -1,8 +1,9 @@
 ---
-title: web
-permalink: /web/
+title: other
+permalink: /other/
+layout: PageList
 tags: 
   - 列表
 ---
 
-## web
+## other
