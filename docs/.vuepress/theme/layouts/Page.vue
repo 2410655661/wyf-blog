@@ -32,7 +32,6 @@ export default {
 }
 </script>
 
-<style lang="stylus" src="../styles/interpolation.styl"></style>
 <style lang="stylus">
 .page
   &
